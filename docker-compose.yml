@@ -26,6 +26,42 @@ services:
     networks:
       - lyxa-network
 
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: auth-service
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGODB_URI=mongodb://admin:secret@mongodb:27017/lyxa_auth?authSource=admin
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+      - JWT_SECRET=supersecret
+      - PORT=3001
+    depends_on:
+      - mongodb
+      - rabbitmq
+    networks:
+      - lyxa-network
+
+  product-service:
+    build:
+      context: ./product-service
+      dockerfile: Dockerfile
+    container_name: product-service
+    ports:
+      - "3002:3002"
+    environment:
+      - MONGODB_URI=mongodb://admin:secret@mongodb:27017/lyxa_products?authSource=admin
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+      - PORT=3002
+    depends_on:
+      - mongodb
+      - rabbitmq
+      - auth-service
+    networks:
+      - lyxa-network
+
 networks:
   lyxa-network:
     driver: bridge

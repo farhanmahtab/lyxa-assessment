@@ -6,22 +6,24 @@ import { prop, modelOptions, Severity } from '@typegoose/typegoose';
     toJSON: {
       transform: (doc, ret) => {
         delete ret.password;
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
         return ret;
       },
     },
   },
-  options: { allowMixed: Severity.ALLOW }
 })
 export class User {
   @prop({ required: true })
-  name: string;
+  name!: string;
 
   @prop({ required: true, unique: true, index: true })
-  email: string;
+  email!: string;
 
   @prop({ required: true, select: false })
-  password: string;
+  password!: string;
 
   @prop({ default: 'user' })
-  role: string;
+  role!: string;
 }

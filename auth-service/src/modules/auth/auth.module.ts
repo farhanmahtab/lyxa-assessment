@@ -3,8 +3,14 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { UsersModule } from '../users/users.module';
+import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller';
+
 @Module({
   imports: [
+    UsersModule,
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -14,7 +20,24 @@ import { PassportModule } from '@nestjs/passport';
       }),
       inject: [ConfigService],
     }),
+    ClientsModule.registerAsync([
+      {
+        name: 'AUTH_SERVICE',
+        imports: [ConfigModule],
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.RMQ,
+          options: {
+            urls: [configService.get<string>('RABBITMQ_URL') || 'amqp://guest:guest@localhost:5672'],
+            queue: 'auth_queue',
+            queueOptions: { durable: false },
+          },
+        }),
+        inject: [ConfigService],
+      },
+    ]),
   ],
-  exports: [JwtModule],
+  providers: [AuthService],
+  controllers: [AuthController],
+  exports: [JwtModule, AuthService],
 })
 export class AuthModule {}

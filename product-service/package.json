@@ -28,6 +28,7 @@
     "@nestjs/microservices": "^11.1.17",
     "@nestjs/mongoose": "^11.0.4",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/swagger": "^11.2.6",
     "@typegoose/typegoose": "^13.2.1",
     "amqp-connection-manager": "^5.0.0",
     "amqplib": "^0.10.9",
@@ -35,7 +36,8 @@
     "class-validator": "^0.14.1",
     "mongoose": "~9.2.2",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

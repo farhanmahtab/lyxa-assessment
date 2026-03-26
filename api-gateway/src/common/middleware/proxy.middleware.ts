@@ -12,11 +12,15 @@ export class ProxyMiddleware implements NestMiddleware {
     const productServiceUrl = this.configService.get<string>('PRODUCT_SERVICE_URL') || 'http://localhost:3002';
 
     if (req.path.startsWith('/auth')) {
-      return proxy(authServiceUrl)(req, res, next);
+      return (proxy as any)(authServiceUrl, {
+        proxyReqPathResolver: (req) => req.url,
+      })(req, res, next);
     }
 
     if (req.path.startsWith('/products')) {
-      return proxy(productServiceUrl)(req, res, next);
+      return (proxy as any)(productServiceUrl, {
+        proxyReqPathResolver: (req) => req.url,
+      })(req, res, next);
     }
 
     next();

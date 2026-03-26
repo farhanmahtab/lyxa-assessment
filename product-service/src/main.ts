@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import { Transport } from '@nestjs/microservices';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
@@ -18,6 +19,17 @@ async function bootstrap() {
   
   app.useGlobalPipes(new ValidationPipe());
   
+  // Connect to RabbitMQ microservice for events
+  app.connectMicroservice({
+    transport: Transport.RMQ,
+    options: {
+      urls: [process.env.RABBITMQ_URL || 'amqp://guest:guest@localhost:5672'],
+      queue: 'product_queue',
+      queueOptions: { durable: false },
+    },
+  });
+
+  await app.startAllMicroservices();
   await app.listen(process.env.PORT || 3002);
   console.log(`Product Service is running on: ${await app.getUrl()}`);
 }

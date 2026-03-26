@@ -6,6 +6,7 @@ import { ProductsService } from './products.service';
 import { ProductsController } from './products.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         schema: buildSchema(Product),
       },
     ]),
+    UsersModule,
     ClientsModule.registerAsync([
       {
         name: 'AUTH_SERVICE',

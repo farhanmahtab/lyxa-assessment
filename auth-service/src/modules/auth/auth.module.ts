@@ -28,7 +28,7 @@ import { AuthController } from './auth.controller';
           transport: Transport.RMQ,
           options: {
             urls: [configService.get<string>('RABBITMQ_URL') || 'amqp://guest:guest@localhost:5672'],
-            queue: 'auth_queue',
+            queue: 'product_queue', // Emit events to the product service's dedicated queue
             queueOptions: { durable: false },
           },
         }),

@@ -4,6 +4,7 @@ A microservices-based project featuring an `Auth Service` and a `Product Service
 
 ## 🚀 Architecture Overview
 
+- **API Gateway**: Single entry point (Port 3000) that proxies requests to Auth and Product services.
 - **Auth Service**: Handles user registration, login, JWT management, and token validation.
 - **Product Service**: Manages product catalog with ownership-based authorization. Validates tokens by communicating with the Auth Service via RabbitMQ.
 - **Inter-service Communication**: Uses RabbitMQ for event-driven updates (e.g., `user.created`) and request-response patterns (e.g., `validate_token`).
@@ -23,9 +24,17 @@ A microservices-based project featuring an `Auth Service` and a `Product Service
    docker-compose up --build
    ```
 3. Services will be available at:
-   - Auth Service: `http://localhost:3001`
-   - Product Service: `http://localhost:3002`
+   - API Gateway: `http://localhost:3000`
+   - Auth Service: Internal (Proxied via Gateway)
+   - Product Service: Internal (Proxied via Gateway)
    - RabbitMQ Management: `http://localhost:15672` (guest/guest)
+
+## 📖 API Documentation (Swagger)
+
+The API Gateway provides routing to all services. Individual Swagger docs:
+- **API Gateway**: `http://localhost:3000/api/docs`
+- **Auth Service**: `http://localhost:3000/auth/api/docs`
+- **Product Service**: `http://localhost:3000/products/api/docs`
 
 ### Local Development
 

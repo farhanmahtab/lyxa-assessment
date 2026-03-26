@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule, getModelToken } from '@nestjs/mongoose';
+import { MongooseModule } from '@nestjs/mongoose';
 import { Product } from './product.model';
 import { buildSchema } from '@typegoose/typegoose';
 import { ProductsService } from './products.service';
@@ -31,17 +31,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       },
     ]),
   ],
-  providers: [
-    ProductsService,
-    {
-      provide: getModelToken(Product.name),
-      useFactory: (connection) => {
-        return connection.model(Product.name, buildSchema(Product));
-      },
-      inject: [getModelToken(Product.name)],
-    }
-  ],
+  providers: [ProductsService],
   controllers: [ProductsController],
-  exports: [ProductsService],
+  exports: [ProductsService, MongooseModule],
 })
 export class ProductsModule {}

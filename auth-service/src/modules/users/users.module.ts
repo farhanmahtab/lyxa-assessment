@@ -1,5 +1,5 @@
 import { Module, Global } from '@nestjs/common';
-import { getModelToken, MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule } from '@nestjs/mongoose';
 import { User } from './user.model';
 import { buildSchema } from '@typegoose/typegoose';
 
@@ -12,15 +12,6 @@ import { buildSchema } from '@typegoose/typegoose';
         schema: buildSchema(User),
       },
     ]),
-  ],
-  providers: [
-    {
-      provide: getModelToken(User.name),
-      useFactory: (connection) => {
-        return connection.model(User.name, buildSchema(User));
-      },
-      inject: [getModelToken(User.name)],
-    }
   ],
   exports: [MongooseModule],
 })

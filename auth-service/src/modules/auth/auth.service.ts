@@ -24,11 +24,11 @@ export class AuthService {
     }
 
     const hashedPassword = await PasswordHasher.hash(password);
-    const user = await this.userModel.create({
+    const user = await new this.userModel({
       email,
       name,
       password: hashedPassword,
-    });
+    }).save();
 
     this.client.emit('user.created', {
       id: user._id,

@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 export class PasswordHasher {
   private static readonly SALT_ROUNDS = 10;
 
-  static async hash(password: string): Array<string> | Promise<string> {
+  static async hash(password: string): Promise<string> {
     return bcrypt.hash(password, this.SALT_ROUNDS);
   }
 

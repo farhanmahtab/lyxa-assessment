@@ -65,6 +65,44 @@ The API Gateway provides routing to all services. Individual Swagger docs:
 - `RABBITMQ_URL`: RabbitMQ connection string
 - `PORT`: 3002
 
+## 🌱 Database Seeding
+
+To populate the database with initial users and products, run the following command from the root directory:
+
+```bash
+npm run seed
+```
+
+This will:
+1. Connect to both Auth and Product databases.
+2. Clear existing data.
+3. Seed 3 users (Admin, Seller, Vendor) with the password `password123`.
+4. Seed 7 sample products assigned to those users.
+
+## ✅ Testing
+
+You can run tests for all services or individual ones from the root directory:
+
+### Run All Tests
+```bash
+npm run test
+```
+
+### Auth Service Tests
+- **Unit Tests**: `npm run test:auth`
+- **Watch Mode**: `npm run test:auth:watch`
+- **Coverage**: `npm run test:auth:cov`
+- **E2E Tests**: `npm run test:auth:e2e`
+
+### Product Service Tests
+- **Unit Tests**: `npm run test:product`
+- **Watch Mode**: `npm run test:product:watch`
+- **Coverage**: `npm run test:product:cov`
+- **E2E Tests**: `npm run test:product:e2e`
+
+### API Gateway Tests
+- **Unit Tests**: `npm run test:gateway`
+
 ## 📧 API Endpoints
 
 ### Auth Service

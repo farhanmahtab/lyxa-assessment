@@ -1,0 +1,25 @@
+{
+  "scripts": {
+    "seed": "npx ts-node scripts/seed.ts",
+    "test": "npm run test --prefix auth-service && npm run test --prefix product-service && npm run test --prefix api-gateway",
+    "test:auth": "npm run test --prefix auth-service",
+    "test:auth:watch": "npm run test:watch --prefix auth-service",
+    "test:auth:cov": "npm run test:cov --prefix auth-service",
+    "test:auth:e2e": "npm run test:e2e --prefix auth-service",
+    "test:product": "npm run test --prefix product-service",
+    "test:product:watch": "npm run test:watch --prefix product-service",
+    "test:product:cov": "npm run test:cov --prefix product-service",
+    "test:product:e2e": "npm run test:e2e --prefix product-service",
+    "test:gateway": "npm run test --prefix api-gateway"
+  },
+  "devDependencies": {
+    "@typegoose/typegoose": "^13.2.1",
+    "@types/bcrypt": "^6.0.0",
+    "@types/node": "^22.10.7",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^16.4.7",
+    "mongoose": "^9.2.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}

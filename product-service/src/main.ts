@@ -30,7 +30,7 @@ async function bootstrap() {
   });
 
   await app.startAllMicroservices();
-  await app.listen(process.env.PORT || 3002);
+  await app.listen(process.env.PORT || 3002, '0.0.0.0');
   console.log(`Product Service is running on: ${await app.getUrl()}`);
 }
 bootstrap();

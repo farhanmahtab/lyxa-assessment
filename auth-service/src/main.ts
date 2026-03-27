@@ -31,7 +31,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   
   await app.startAllMicroservices();
-  await app.listen(process.env.PORT || 3001);
+  await app.listen(process.env.PORT || 3001, '0.0.0.0');
   console.log(`Auth Service is running on: ${await app.getUrl()}`);
 }
 bootstrap();

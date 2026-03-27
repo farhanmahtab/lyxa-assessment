@@ -79,7 +79,7 @@ describe('ProductsService', () => {
       model.findByIdAndUpdate.mockReturnValue({ exec: jest.fn().mockResolvedValue({ ...mockProduct, title: 'Updated' }) });
 
       const result = await service.update('product_id', { title: 'Updated' }, 'owner_id');
-      expect(result.title).toEqual('Updated');
+      expect(result?.title).toEqual('Updated');
     });
 
     it('should throw ForbiddenException if not owner', async () => {

@@ -13,6 +13,12 @@ services:
       - mongodb_data:/data/db
     networks:
       - lyxa-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -25,6 +31,12 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
     networks:
       - lyxa-network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
 
   api-gateway:
     build:
@@ -38,8 +50,10 @@ services:
       - PRODUCT_SERVICE_URL=http://product-service:3002
       - PORT=3000
     depends_on:
-      - auth-service
-      - product-service
+      auth-service:
+        condition: service_started
+      product-service:
+        condition: service_started
     networks:
       - lyxa-network
 
@@ -54,8 +68,10 @@ services:
       - JWT_SECRET=supersecret
       - PORT=3001
     depends_on:
-      - mongodb
-      - rabbitmq
+      mongodb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     networks:
       - lyxa-network
 
@@ -69,9 +85,12 @@ services:
       - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
       - PORT=3002
     depends_on:
-      - mongodb
-      - rabbitmq
-      - auth-service
+      mongodb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
     networks:
       - lyxa-network
 

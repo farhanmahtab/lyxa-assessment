@@ -1,0 +1,223 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Lyxa-assessment",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "API Gateway"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "summary": "Login",
+        "responses": {},
+        "tags": [
+          "API Gateway",
+          "Auth API"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              },
+              "example": "{\n  \"email\": \"user1@example.com\",\n//   \"email\": \"john@lyxa.com\",\n  \"password\": \"password123\"\n}"
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "summary": "Register User",
+        "responses": {},
+        "tags": [
+          "API Gateway",
+          "Auth API"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "email": "user@example.com",
+                "password": "password123",
+                "name": "John Doe"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "summary": "Get products",
+        "responses": {},
+        "tags": [
+          "API Gateway",
+          "Product API"
+        ]
+      },
+      "post": {
+        "summary": "Create product",
+        "responses": {},
+        "tags": [
+          "API Gateway",
+          "Product API"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number"
+                  }
+                }
+              },
+              "example": {
+                "title": "Product 1",
+                "description": "Testing Product 1",
+                "price": 999.99
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Product ID",
+        "responses": {},
+        "tags": [
+          "Product"
+        ]
+      }
+    },
+    "/products/69c61d3771aba48a21e357b0": {
+      "get": {
+        "summary": "Get product By ID",
+        "responses": {},
+        "tags": [
+          "API Gateway",
+          "Product API"
+        ]
+      },
+      "patch": {
+        "summary": "Edit Product ID",
+        "responses": {},
+        "tags": [
+          "API Gateway",
+          "Product API"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "title": "Product edited"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Product ID",
+        "responses": {},
+        "tags": [
+          "API Gateway",
+          "Product API"
+        ]
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Health Check",
+        "responses": {},
+        "tags": [
+          "API Gateway"
+        ]
+      }
+    },
+    "/products/69c53d9dd44a5c89ad9ad0b9": {
+      "patch": {
+        "summary": "Edit Product ID",
+        "responses": {},
+        "tags": [
+          "Product"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "title": "Product edited"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

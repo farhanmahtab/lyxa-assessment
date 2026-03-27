@@ -12,9 +12,9 @@ export class UsersService {
   async create(user: { email: string; name: string; authId: string }) {
     console.log(`💾 [Product Service] Synchronizing user: ${user.email}`);
     return this.userModel.findOneAndUpdate(
-      { authId: user.authId },
+      { email: user.email }, 
       user,
-      { upsert: true, new: true }
+      { upsert: true, returnDocument: 'after' }
     );
   }
 

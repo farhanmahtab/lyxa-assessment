@@ -1,7 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Request, Response, NextFunction } from 'express';
-import * as proxy from 'express-http-proxy';
+import proxy from 'express-http-proxy';
 
 @Injectable()
 export class ProxyMiddleware implements NestMiddleware {
@@ -12,11 +12,13 @@ export class ProxyMiddleware implements NestMiddleware {
     const productServiceUrl = this.configService.get<string>('PRODUCT_SERVICE_URL') || 'http://127.0.0.1:3002';
 
     if (req.path.startsWith('/auth')) {
-      return (proxy as any)(authServiceUrl)(req, res, next);
+      console.log(`[API Gateway] Proxying ${req.method} ${req.url} -> ${authServiceUrl}${req.url}`);
+      return proxy(authServiceUrl)(req, res, next);
     }
 
     if (req.path.startsWith('/products')) {
-      return (proxy as any)(productServiceUrl)(req, res, next);
+      console.log(`[API Gateway] Proxying ${req.method} ${req.url} -> ${productServiceUrl}${req.url}`);
+      return proxy(productServiceUrl)(req, res, next);
     }
 
     next();
